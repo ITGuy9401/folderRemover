@@ -10,6 +10,6 @@ public class StatusBar extends JComponent {
 	private static final long serialVersionUID = 1L;
 
 	public StatusBar() {
-		
+		super();
 	}
 }

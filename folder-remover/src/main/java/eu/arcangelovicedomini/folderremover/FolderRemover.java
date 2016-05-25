@@ -1,6 +1,7 @@
 package eu.arcangelovicedomini.folderremover;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
@@ -17,11 +18,11 @@ public class FolderRemover {
 	
 	public FolderRemover() {
 		mainFrame = new JFrame("FolderRemover - by Arcangelo Vicedomini");
-		mainFrame.setSize(640, 480);
+		mainFrame.getContentPane().setPreferredSize(new Dimension(640, 480));
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.setJMenuBar(new Menu());
-		mainFrame.add(new MainContainer(), BorderLayout.CENTER);
-		mainFrame.add(new StatusBar(), BorderLayout.SOUTH);
+		mainFrame.getContentPane().add(new MainContainer(), BorderLayout.CENTER);
+		mainFrame.getContentPane().add(new StatusBar(), BorderLayout.SOUTH);
 		
 	}
 	

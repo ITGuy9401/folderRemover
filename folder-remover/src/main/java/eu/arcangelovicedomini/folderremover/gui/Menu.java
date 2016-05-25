@@ -18,11 +18,27 @@ public class Menu extends JMenuBar implements MouseListener {
 
 	JMenuItem projectSite = null;
 	JMenuItem searchMe = null;
+	JMenuItem exit = null;
 	JMenu helpMenu = null;
+	JMenu fileMenu = null;
 
 	public Menu() {
 		super();
+		this.add(getFileMenu());
+
 		this.add(getHelpMenu());
+	}
+
+	public JMenu getFileMenu() {
+		if (fileMenu == null) {
+			fileMenu = new JMenu("File");
+
+			exit = new JMenuItem("Exit");
+			exit.addMouseListener(this);
+			fileMenu.add(exit);
+		}
+
+		return fileMenu;
 	}
 
 	@Override
@@ -38,7 +54,6 @@ public class Menu extends JMenuBar implements MouseListener {
 			searchMe.addMouseListener(this);
 			helpMenu.add(searchMe);
 		}
-		
 		return helpMenu;
 	}
 
@@ -51,6 +66,8 @@ public class Menu extends JMenuBar implements MouseListener {
 				DesktopUtil.openWebpage("https://github.com/ITGuy9401/folderRemover/wiki");
 			} else if (e.getComponent().equals(searchMe)) {
 				DesktopUtil.openWebpage("https://www.arcangelovicedomini.eu");
+			} else if (e.getComponent().equals(exit)) {
+				System.exit(0);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

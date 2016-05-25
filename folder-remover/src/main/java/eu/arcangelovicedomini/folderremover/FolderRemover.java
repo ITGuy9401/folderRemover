@@ -12,23 +12,32 @@ import eu.arcangelovicedomini.folderremover.gui.StatusBar;
 /**
  * Main class
  */
-public class FolderRemover {
-	JFrame mainFrame;
+public class FolderRemover extends JFrame {
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	StatusBar statusBar = null;
 	
 	public FolderRemover() {
-		mainFrame = new JFrame("FolderRemover - by Arcangelo Vicedomini");
-		mainFrame.getContentPane().setPreferredSize(new Dimension(640, 480));
-		mainFrame.setLayout(new BorderLayout());
-		mainFrame.setJMenuBar(new Menu());
-		mainFrame.getContentPane().add(new MainContainer(), BorderLayout.CENTER);
-		mainFrame.getContentPane().add(new StatusBar(), BorderLayout.SOUTH);
+		super("FolderRemover - by Arcangelo Vicedomini");
+		
+		statusBar = new StatusBar();
+		
+		this.getContentPane().setPreferredSize(new Dimension(640, 480));
+		this.setLayout(new BorderLayout());
+		this.setJMenuBar(new Menu());
+		this.getContentPane().add(new MainContainer(), BorderLayout.CENTER);
+		this.getContentPane().add(statusBar, BorderLayout.SOUTH);
 		
 	}
 	
 	public static void main(String[] args) {
 		FolderRemover mainApp = new FolderRemover();
-		mainApp.mainFrame.pack();
-		mainApp.mainFrame.setVisible(true);
+		mainApp.pack();
+		mainApp.setVisible(true);
 	}
 }

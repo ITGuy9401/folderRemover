@@ -5,9 +5,15 @@ import java.awt.Desktop;
 import java.net.URI;
 import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import eu.arcangelovicedomini.folderremover.FolderRemover;
 
 public class DesktopUtil {
+	
+	public static final Icon FOLDER_OPEN = getIconFile("classpath:folder_open.png");
+	
 	public static void openWebpage(URI uri) throws Exception {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
@@ -30,5 +36,9 @@ public class DesktopUtil {
 			}
 		} while ((component = component.getParent()) != null);
 		return null;
+	}
+	
+	public static Icon getIconFile(String path) { 
+			return new ImageIcon(path);
 	}
 }

@@ -7,6 +7,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import eu.arcangelovicedomini.folderremover.util.DesktopUtil;
+
 public class MainContainer extends JComponent {
 
 	/**
@@ -33,7 +35,7 @@ public class MainContainer extends JComponent {
 		folderLine = new JTextField(System.getenv("user.home"));
 		folderSelect.add(folderLine, BorderLayout.CENTER);
 		
-		selectFolderButton = new JButton("Open folder", null);
+		selectFolderButton = new JButton("Open folder", DesktopUtil.FOLDER_OPEN_24);
 		
 		return folderSelect;
 	}

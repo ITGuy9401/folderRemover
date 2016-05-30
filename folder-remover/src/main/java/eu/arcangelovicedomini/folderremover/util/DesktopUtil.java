@@ -2,6 +2,9 @@ package eu.arcangelovicedomini.folderremover.util;
 
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.net.URL;
 
@@ -12,7 +15,7 @@ import eu.arcangelovicedomini.folderremover.FolderRemover;
 
 public class DesktopUtil {
 	
-	public static final Icon FOLDER_OPEN = getIconFile("classpath:folder_open.png");
+	public static final Icon FOLDER_OPEN_24 = getResizedIcon(getIconFile("folder_open.png"), 24, 24);
 	
 	public static void openWebpage(URI uri) throws Exception {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -38,7 +41,17 @@ public class DesktopUtil {
 		return null;
 	}
 	
-	public static Icon getIconFile(String path) { 
+	public static ImageIcon getIconFile(String path) { 
 			return new ImageIcon(path);
+	}
+	
+	public static ImageIcon getResizedIcon(ImageIcon icon, int width, int height) {
+		Image img = icon.getImage();
+		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		
+		Graphics g = bi.createGraphics();
+		g.drawImage(img, 0, 0, width, height, null);
+		
+		return new ImageIcon(bi);
 	}
 }

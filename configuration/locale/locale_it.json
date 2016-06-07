@@ -4,5 +4,8 @@
     "label.FolderRemover.folderName" : "Nome della cartella",
     "label.FolderRemover.parentFolder": "Cartella pradre",
     "button.FolderRemover.selectFolder": "Apri cartella",
-    "button.FolderRemover.execute": "Esegui"
+    "button.FolderRemover.execute": "Esegui",
+    "button.ok": "Ok",
+    "button.close": "Chiudi",
+    "error.FolderRemover.cannotOpenFolder": "Impossibile aprire la cartella '{{arg0}}', si è verificato un errore: {{arg1}}"
 }

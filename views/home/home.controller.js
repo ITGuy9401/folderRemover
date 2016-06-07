@@ -41,15 +41,20 @@
 
         function internalRoutineDeleteFromFolder(parentFolder, folderNameToDelete) {
             var rwEnabledMain = true;
-            fs.accessSync(parentFolder, fs.R_OK | fs.W_OK, (err) => {
-                if (err) {
-                    rwEnabledMain = false;
-                    var alert = $mdDialog.alert({
-                        
-                    });
-                    $mdDialog.show(alert);
-                }
-            });
+            try {
+                var result = fs.accessSync(parentFolder, fs.R_OK | fs.W_OK);
+            } catch (err) {
+                rwEnabledMain = false;
+                var alert = $mdDialog.alert({
+                    title: $translate.instant('title.userSupport'),
+                    textContent: $translate.instant('error.FolderRemover.cannotOpenFolder', {
+                        arg0: parentFolder,
+                        arg1: err
+                    }),
+                    ok: $translate.instant('button.close')
+                });
+                $mdDialog.show(alert);
+            }
         }
     }
 })();

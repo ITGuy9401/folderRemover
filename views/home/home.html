@@ -9,10 +9,14 @@
                 <label>{{'label.FolderRemover.parentFolder' | translate}}</label>
                 <input ng-model="vm.form.parentFolder">
             </md-input-container>
-            <div id="folderOpen">
-                <md-button class="md-primary md-raised" ng-click="vm.openFolder()">{{'button.FolderRemover.selectFolder' | translate}}</md-button>
+            <div id="folderOpen" layout="column" layout-gt-md="row">
+                <div>
+                    <md-button class="md-primary md-raised" ng-click="vm.openFolder()">{{'button.FolderRemover.selectFolder' | translate}}</md-button>
+                </div>
+                <div>
+                    <md-button class="md-primary md-raised" ng-click="vm.execute()">{{'button.FolderRemover.execute' | translate}}</md-button>
+                </div>
             </div>
         </div>
-        <md-button class="md-primary md-raised">{{'button.FolderRemover.execute' | translate}}</md-button>
     </form>
 </div>

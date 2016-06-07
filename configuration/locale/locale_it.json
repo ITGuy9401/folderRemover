@@ -7,5 +7,7 @@
     "button.FolderRemover.execute": "Esegui",
     "button.ok": "Ok",
     "button.close": "Chiudi",
-    "error.FolderRemover.cannotOpenFolder": "Impossibile aprire la cartella '{{arg0}}', si è verificato un errore: {{arg1}}"
+    "error.FolderRemover.cannotOpenFolder": "Impossibile aprire la cartella '{{arg0}}', si è verificato un errore: {{arg1}}",
+    "error.FolderRemover.cannotRemoveFolder": "Impossibile eliminare la cartella '{{arg0}}', si è verificato un errore: {{arg1}}",
+    "message.FolderRemover.deletedFolder": "Eliminata la cartella '{{arg0}}'"
 }

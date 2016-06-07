@@ -17,12 +17,13 @@
 		});
 	}
 
-	function homeControllerFn($scope, $rootScope, $translate, $mdDialog) {
+	function homeControllerFn($scope, $rootScope, $translate, $mdDialog, $sce) {
 		var vm = this;
 		vm.form = {};
 		vm.openFolder = openFolderFn;
 		vm.execute = executeFn;
-		vm.log = [$translate.instant('label.ready')];
+		vm.log = [];
+		vm.trustHtml = $sce.trustAsHtml;
 		var logger = {
 			log: loggerLog,
 			err: loggerErr,
@@ -44,57 +45,63 @@
 		}
 
 		function executeFn() {
-			logger.log($translate.instant('message.FolderRemover.selectedFolder', {arg0: vm.form.parentFolder}));
-			logger.log($translate.instant('message.FolderRemover.selectedFolderToDelete', {arg0: vm.form.folderName}))
+			logger.log($translate.instant('message.FolderRemover.selectedFolder', {
+				arg0: vm.form.parentFolder
+			}));
+			logger.log($translate.instant('message.FolderRemover.selectedFolderToDelete', {
+				arg0: vm.form.folderName
+			}))
 			internalRoutineDeleteFromFolder(vm.form.parentFolder, vm.form.folderName)
 		}
 
 		function internalRoutineDeleteFromFolder(parentFolder, folderNameToDelete) {
-			var rwEnabledMain = true;
-			try {
-				fs.accessSync(parentFolder, fs.R_OK | fs.W_OK);
-				var directories = getDirectories(parentFolder);
-
-				var hasFolder = false;
-
-				for (var i = 0; i < directories.length; i++) {
-					if (directories[i].toUpperCase() === folderNameToDelete.toUpperCase()) {
-						hasFolder = true;
-					} else {
-						internalRoutineDeleteFromFolder(path.resolve(parentFolder + '/' + directories[i]), folderNameToDelete);
-					}
-				}
-
-				var pathToDelete = path.resolve(parentFolder + '/' + folderNameToDelete);
-
+			$scope.$evalAsync(function() {
+				var rwEnabledMain = true;
 				try {
-					if (hasFolder) {
-						rimraf(pathToDelete, {}, function (err) {
-							throw err;
-						});
-						var deletedMessage = $translate.instant('message.FolderRemover.deletedFolder', {
-							arg0: pathToDelete
-						});
-						logger.log(deletedMessage);
-					}
-				} catch (err) {
-					var errorMessage = $translate.instant('error.FolderRemover.cannotRemoveFolder', {
-						arg0: pathToDelete,
-						arg1: err.message
-					});
-					logger.err(errorMessage);
-					console.error(err);
-				}
+					fs.accessSync(parentFolder, fs.R_OK | fs.W_OK);
+					var directories = getDirectories(parentFolder);
 
-			} catch (err1) {
-				rwEnabledMain = false;
-				var errorMessage = translate.instant('error.FolderRemover.cannotOpenFolder', {
-					arg0: parentFolder,
-					arg1: err1.message
-				});
-				logger.warn(errorMessage);
-				console.warn(err);
-			}
+					var hasFolder = false;
+
+					for (var i = 0; i < directories.length; i++) {
+						if (directories[i].toUpperCase() === folderNameToDelete.toUpperCase()) {
+							hasFolder = true;
+						} else {
+							internalRoutineDeleteFromFolder(path.resolve(parentFolder + '/' + directories[i]), folderNameToDelete);
+						}
+					}
+
+					var pathToDelete = path.resolve(parentFolder + '/' + folderNameToDelete);
+
+					try {
+						if (hasFolder) {
+							rimraf(pathToDelete, {}, function(err) {
+								throw err;
+							});
+							var deletedMessage = $translate.instant('message.FolderRemover.deletedFolder', {
+								arg0: pathToDelete
+							});
+							logger.log(deletedMessage);
+						}
+					} catch (err) {
+						var errorMessage = $translate.instant('error.FolderRemover.cannotRemoveFolder', {
+							arg0: pathToDelete,
+							arg1: err.message
+						});
+						logger.err(errorMessage);
+						console.error(err);
+					}
+
+				} catch (err1) {
+					rwEnabledMain = false;
+					var errorMessage = translate.instant('error.FolderRemover.cannotOpenFolder', {
+						arg0: parentFolder,
+						arg1: err1.message
+					});
+					logger.warn(errorMessage);
+					console.warn(err);
+				}
+			});
 		}
 
 		function getDirectories(srcpath) {
@@ -104,22 +111,24 @@
 		}
 
 		function loggerLog(message) {
-			vm.log.push(loggerDecode(message, 'info-circle', 'blue'));
+			vm.log.push(loggerDecode(message, 'info-circle', '#0099ff'));
 			console.log(message);
 		}
 
 		function loggerErr(message) {
-			vm.log.push(loggerDecode(message, 'exclamation-circle', 'red'));
+			vm.log.push(loggerDecode(message, 'exclamation-circle', '#ff0000'));
 			console.error(message);
 		}
 
 		function loggerWarn(message) {
-			vm.log.push(loggerDecode(message, 'exclamation-triangle', 'orange'));
+			vm.log.push(loggerDecode(message, 'exclamation-triangle', '#ffcc00'));
 			console.warn(message);
 		}
 
 		function loggerDecode(message, icon, color) {
-			return '<p style="color: ' + color + '<span class="fa fa-' + icon + '"></span>' + message + "</p>";
+			return '<p style="color: ' + color + ' !important;"><span class="fa fa-' + icon + '"></span>&nbsp;' + message + "</p>";
 		}
+
+		logger.log($translate.instant('label.ready'));
 	}
 })();

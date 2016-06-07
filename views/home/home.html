@@ -21,8 +21,8 @@
             </div>
         </form>
     </md-content>
-    <md-content flex>
-        <div ng-repeat="log in vm.log" ng-bind-html="log">
+    <md-content flex layout="column" layout-padding>
+        <div ng-repeat="log in vm.log" ng-bind-html="vm.trustHtml(log)">
             
         </div>
     </md-content>

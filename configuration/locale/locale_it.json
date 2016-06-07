@@ -1,8 +1,0 @@
-{
-    "title.userSupport": "Assistenza utente",
-    "title.FolderRemover": "Rimozione cartelle",
-    "label.FolderRemover.folderName" : "Nome della cartella",
-    "label.FolderRemover.parentFolder": "Cartella pradre",
-    "button.FolderRemover.selectFolder": "Apri cartella",
-    "button.FolderRemover.execute": "Esegui"
-}

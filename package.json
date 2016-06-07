@@ -1,0 +1,15 @@
+{
+  "name": "folder-remover",
+  "version": "1.0.0",
+  "description": "removes the unwanted folders",
+  "main": "home.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arcangelo Vicedomini",
+  "license": "MIT",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "electron-prebuilt": "^1.2.1"
+  }
+}

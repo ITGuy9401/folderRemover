@@ -2,7 +2,8 @@
 
 	const defDirectory = require('electron').remote.app.getPath('desktop');
 	const fs = require('fs'); // Node.js file system API
-	const path = require('path'); // Node.js file system API for path browsing 
+	const path = require('path'); // Node.js file system API for path browsing
+	const rimraf = require('rimraf');
 
 	angular.module('folder-remover')
 		.config(configCurrentRouteFn)
@@ -21,7 +22,7 @@
 		vm.form = {};
 		vm.openFolder = openFolderFn;
 		vm.execute = executeFn;
-		vm.log = "";
+		vm.log = [$translate.instant('label.ready')];
 		var logger = {
 			log: loggerLog,
 			err: loggerErr,
@@ -43,6 +44,8 @@
 		}
 
 		function executeFn() {
+			logger.log($translate.instant('message.FolderRemover.selectedFolder', {arg0: vm.form.parentFolder}));
+			logger.log($translate.instant('message.FolderRemover.selectedFolderToDelete', {arg0: vm.form.folderName}))
 			internalRoutineDeleteFromFolder(vm.form.parentFolder, vm.form.folderName)
 		}
 
@@ -52,11 +55,11 @@
 				fs.accessSync(parentFolder, fs.R_OK | fs.W_OK);
 				var directories = getDirectories(parentFolder);
 
-				idToRemove = null;
+				var hasFolder = false;
 
 				for (var i = 0; i < directories.length; i++) {
 					if (directories[i].toUpperCase() === folderNameToDelete.toUpperCase()) {
-						idToRemove = i;
+						hasFolder = true;
 					} else {
 						internalRoutineDeleteFromFolder(path.resolve(parentFolder + '/' + directories[i]), folderNameToDelete);
 					}
@@ -65,36 +68,32 @@
 				var pathToDelete = path.resolve(parentFolder + '/' + folderNameToDelete);
 
 				try {
-					if (idToRemove) {
-
+					if (hasFolder) {
+						rimraf(pathToDelete, {}, function (err) {
+							throw err;
+						});
 						var deletedMessage = $translate.instant('message.FolderRemover.deletedFolder', {
 							arg0: pathToDelete
 						});
-						console.log(deletedMessage);
+						logger.log(deletedMessage);
 					}
 				} catch (err) {
-					var alert = $mdDialog.alert({
-					title: $translate.instant('title.userSupport'),
-					textContent: $translate.instant('error.FolderRemover.cannotRemoveFolder', {
+					var errorMessage = $translate.instant('error.FolderRemover.cannotRemoveFolder', {
 						arg0: pathToDelete,
-						arg1: err
-					}),
-					ok: $translate.instant('button.close')
-				});
-				$mdDialog.show(alert);
+						arg1: err.message
+					});
+					logger.err(errorMessage);
+					console.error(err);
 				}
 
-			} catch (err) {
+			} catch (err1) {
 				rwEnabledMain = false;
-				var alert = $mdDialog.alert({
-					title: $translate.instant('title.userSupport'),
-					textContent: $translate.instant('error.FolderRemover.cannotOpenFolder', {
-						arg0: parentFolder,
-						arg1: err
-					}),
-					ok: $translate.instant('button.close')
+				var errorMessage = translate.instant('error.FolderRemover.cannotOpenFolder', {
+					arg0: parentFolder,
+					arg1: err1.message
 				});
-				$mdDialog.show(alert);
+				logger.warn(errorMessage);
+				console.warn(err);
 			}
 		}
 
@@ -105,19 +104,22 @@
 		}
 
 		function loggerLog(message) {
-			vm.log = vm.log + "<br/>" + loggerDecode(message, '', 'blue');
+			vm.log.push(loggerDecode(message, 'info-circle', 'blue'));
+			console.log(message);
 		}
 
 		function loggerErr(message) {
-			vm.log = vm.log + "<br/>" + loggerDecode(message, '', 'red');
+			vm.log.push(loggerDecode(message, 'exclamation-circle', 'red'));
+			console.error(message);
 		}
 
 		function loggerWarn(message) {
-			vm.log = vm.log + "<br/>" + loggerDecode(message, '', 'orange');
+			vm.log.push(loggerDecode(message, 'exclamation-triangle', 'orange'));
+			console.warn(message);
 		}
 
 		function loggerDecode(message, icon, color) {
-			return '<span style="color: ' + color + '<span class="fa fa-' + icon + '"></span>' + message + "</span>";
+			return '<p style="color: ' + color + '<span class="fa fa-' + icon + '"></span>' + message + "</p>";
 		}
 	}
 })();

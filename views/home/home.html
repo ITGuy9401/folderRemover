@@ -1,22 +1,29 @@
-<div layout="column" flex>
-    <form layout="column" name="folderForm">
-        <div layout-gt-sm="row" layout="column">
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>{{'label.FolderRemover.folderName' | translate}}</label>
-                <input ng-model="vm.form.folderName">
-            </md-input-container>
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>{{'label.FolderRemover.parentFolder' | translate}}</label>
-                <input ng-model="vm.form.parentFolder">
-            </md-input-container>
-            <div id="folderOpen" layout="column" layout-gt-md="row">
-                <div>
-                    <md-button class="md-primary md-raised" ng-click="vm.openFolder()">{{'button.FolderRemover.selectFolder' | translate}}</md-button>
-                </div>
-                <div>
-                    <md-button class="md-primary md-raised" ng-click="vm.execute()">{{'button.FolderRemover.execute' | translate}}</md-button>
+<div layout="column" style="height: 100%; width: 100%">
+    <md-content style="background: #f6f6f6;">
+        <form flex layout="column" name="folderForm">
+            <div layout-gt-sm="row" layout="column">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>{{'label.FolderRemover.folderName' | translate}}</label>
+                    <input ng-model="vm.form.folderName">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>{{'label.FolderRemover.parentFolder' | translate}}</label>
+                    <input ng-model="vm.form.parentFolder">
+                </md-input-container>
+                <div id="folderOpen" layout="column" layout-gt-md="row" layout-align="space-around end" layout-align-gt-md="space-between none">
+                    <div>
+                        <md-button class="md-primary md-raised" ng-click="vm.openFolder()">{{'button.FolderRemover.selectFolder' | translate}}</md-button>
+                    </div>
+                    <div>
+                        <md-button class="md-primary md-raised" ng-click="vm.execute()">{{'button.FolderRemover.execute' | translate}}</md-button>
+                    </div>
                 </div>
             </div>
+        </form>
+    </md-content>
+    <md-content flex>
+        <div ng-repeat="log in vm.log" ng-bind-html="log">
+            
         </div>
-    </form>
+    </md-content>
 </div>

@@ -1,0 +1,16 @@
+{
+    "title.userSupport": "Assistenza utente",
+    "title.FolderRemover": "Rimozione cartelle",
+    "label.FolderRemover.folderName" : "Nome della cartella",
+    "label.FolderRemover.parentFolder": "Cartella pradre",
+    "button.FolderRemover.selectFolder": "Apri cartella",
+    "button.FolderRemover.execute": "Esegui",
+    "button.ok": "Ok",
+    "button.close": "Chiudi",
+    "label.ready": "Pronto",
+    "error.FolderRemover.cannotOpenFolder": "Impossibile aprire la cartella '{{arg0}}', si è verificato un errore: {{arg1}}",
+    "error.FolderRemover.cannotRemoveFolder": "Impossibile eliminare la cartella '{{arg0}}', si è verificato un errore: {{arg1}}",
+    "message.FolderRemover.deletedFolder": "Eliminata la cartella '{{arg0}}'",
+    "message.FolderRemover.selectedFolder": "Selezionata la cartella '{{arg0}}'",
+    "message.FolderRemover.selectedFolderToDelete": "Cartella da eliminare: '{{arg0}}'"
+}
